@@ -41,7 +41,7 @@ def create_app():
     admin.add_view(BannerView)
     app_model.Base.metadata.create_all(bind=engine)
     logging.basicConfig(
-       format='VCurrency:{levelname:7} {message}', style='{', level=logging.DEBUG)
+       format='Book:{levelname:7} {message}', style='{', level=logging.DEBUG)
     
     app.include_router(upload.upload_router,dependencies=[Depends(AuthHandler)])
     app.include_router(login.router)

@@ -46,6 +46,7 @@ def create_app():
     app.include_router(upload.upload_router,dependencies=[Depends(AuthHandler)])
     app.include_router(login.router)
     app.include_router(book.router)
+    app.include_router(upload.read_router)
     @app.on_event("startup")
     async def startup_event():
         user_data = [

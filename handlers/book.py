@@ -14,12 +14,22 @@ from modules.token import AuthToken
 from sqlalchemy import desc
 
 from models.model import  Student as User
-from models.model import Book,Rating
+from models.model import Book,Rating,BannerModel
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from modules.utils import pagination
 router = APIRouter()
 auth_handler = AuthToken()
+
+
+@router.get("/banners", tags=["banner"])
+async def get_app_banners(
+    page: int = 1 , per_page: int=10,
+    db: Session = Depends(get_db)#, current_user: CurrentUser = Depends(get_current_user)
+):
+    banners = db.query(BannerModel).order_by(desc(BannerModel.createdate)).all()
+    return {"banner":banners}
+
 
 
 @router.get("/books", tags=["books"])
@@ -111,7 +121,7 @@ async def get_recom(
         print(ratings_matrix)
     cosine_similarity_matrix = cosine_similarity(ratings_matrix.T, ratings_matrix.T)
     recommendations = get_recommendations_for_user(session, user_id, all_books, ratings_matrix, cosine_similarity_matrix)
-    return recommendations
+    return {"recommendations":recommendations}
 
 
 @router.get("/predict/{id}", tags=["predict"])

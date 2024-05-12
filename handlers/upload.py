@@ -10,7 +10,7 @@ from fastapi.responses import FileResponse
 upload_router = APIRouter()
 read_router = APIRouter()
 
-
+"""
 @upload_router.post("/uploads")
 async def upload_file(uploaded_file: UploadFile = File(...)):
     filename, file_extension = os.path.splitext(uploaded_file.filename)
@@ -19,7 +19,7 @@ async def upload_file(uploaded_file: UploadFile = File(...)):
         content = await uploaded_file.read()  # async read
         await out_file.write(content)  # async write
     response_str = dict(status="success",file_name=file_location,original_name=uploaded_file.filename,web_url=file_location,type=file_extension )
-    return response_str
+    return response_str"""
 
 @read_router.get("/uploads/{name_file}")
 def download_file(name_file: str):

@@ -59,6 +59,7 @@ class Book(Base):
     createdate = Column(DateTime, default=datetime.datetime.now)
     publishdate = Column(DateTime, default=datetime.datetime.now)
     postImage = Column(FileType(storage=storage))
+    ebook = Column(FileType(storage=storage))
     description = Column(String, nullable=False)
 
 class Rating(Base):

@@ -14,7 +14,7 @@ class StudentView(ModelView, model=Student):
     page_size_options = [25, 50, 100, 200]
 
 class BookView(ModelView, model=Book):
-    column_list = [Book.id, Book.name, Book.category, Book.author,Book.publisher,Book.publishdate,Book.postImage]
+    column_list = [Book.id, Book.name, Book.category, Book.author,Book.publisher,Book.publishdate,Book.postImage,Book.ebook]
     icon = "fa-solid fa-book"
     page_size = 50
     page_size_options = [25, 50, 100, 200]

@@ -18,6 +18,7 @@ class BookView(ModelView, model=Book):
     icon = "fa-solid fa-book"
     page_size = 50
     page_size_options = [25, 50, 100, 200]
+    can_edit = False
 
 
 class RatingView(ModelView, model=Rating):

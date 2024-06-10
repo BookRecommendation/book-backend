@@ -62,6 +62,17 @@ class Book(Base):
     ebook = Column(FileType(storage=storage))
     description = Column(String, nullable=False)
 
+
+class Library(Base):
+    __tablename__ = "library"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, nullable=False)
+    quantity =  Column(Integer,nullable=False,index=True)
+    createdate = Column(DateTime, default=datetime.datetime.now)
+    postImage = Column(FileType(storage=storage))
+    description = Column(String, nullable=False)
+
+
 class Rating(Base):
     __tablename__ = "rating"
     id = Column(Integer, primary_key=True, index=True)
@@ -77,14 +88,3 @@ class BannerModel(Base):
     postImage = Column(FileType(storage=storage))
     createdate = Column(DateTime, default=datetime.datetime.now)
 
-
-class Library(Base):
-    __tablename__ = "library"
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, nullable=False)
-    category = Column(String, nullable=False)
-    author = Column(String, nullable=False)
-    createdate = Column(DateTime, default=datetime.datetime.now)
-    publishdate = Column(DateTime, default=datetime.datetime.now)
-    postImage = Column(FileType(storage=storage))
-    description = Column(String, nullable=False)

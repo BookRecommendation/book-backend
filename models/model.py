@@ -76,3 +76,15 @@ class BannerModel(Base):
     description = Column(String, nullable=False)
     postImage = Column(FileType(storage=storage))
     createdate = Column(DateTime, default=datetime.datetime.now)
+
+
+class Library(Base):
+    __tablename__ = "library"
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, unique=True, nullable=False)
+    category = Column(String, nullable=False)
+    author = Column(String, nullable=False)
+    createdate = Column(DateTime, default=datetime.datetime.now)
+    publishdate = Column(DateTime, default=datetime.datetime.now)
+    postImage = Column(FileType(storage=storage))
+    description = Column(String, nullable=False)

@@ -14,7 +14,7 @@ from modules.token import AuthToken
 from sqlalchemy import desc
 
 from models.model import  Student as User
-from models.model import Book,Rating,BannerModel
+from models.model import Book,Rating,BannerModel,Library
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from modules.utils import pagination
@@ -30,11 +30,28 @@ async def get_app_banners(
     banners = db.query(BannerModel).order_by(desc(BannerModel.createdate)).all()
     return {"banner":banners}
 
+@router.get("/libraries", tags=["library"])
+async def get_libs(
+    page: int = 1 , per_page: int=10,
+    db: Session = Depends(get_db), current_user: CurrentUser = Depends(get_current_user)
+):
+    count = db.query(Library).count()
+    meta_data =  pagination(page,per_page,count)
+    book = db.query(Library).order_by(desc(Library.createdate)).limit(per_page).offset((page - 1) * per_page).all()
+    return {"library":book}
+
+
+@router.get("/libraries/{id}", tags=["library"])
+def get_lib_byid(id: int, db: Session = Depends(get_db)):
+    book_data = db.get(Library, id)
+    if not book_data:
+        raise HTTPException(status_code=404, detail="Book ID not found.")
+    return {"library":book_data}
 
 
 @router.get("/books", tags=["books"])
 async def get_book_categories(
-    page: int = 1 , per_page: int=10,shop:str="shop1",
+    page: int = 1 , per_page: int=10,
     db: Session = Depends(get_db), current_user: CurrentUser = Depends(get_current_user)
 ):
     count = db.query(Book).count()

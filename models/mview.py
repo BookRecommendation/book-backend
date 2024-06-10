@@ -1,5 +1,5 @@
 from sqladmin import Admin, ModelView
-from models.model import Admin,Student,Book,Rating,BannerModel
+from models.model import Admin,Student,Book,Rating,BannerModel,Library
 
 class AdminView(ModelView, model=Admin):
     column_list = [Admin.id, Admin.username, Admin.role,Admin.active,Admin.createdate,Admin.postImage]
@@ -31,6 +31,13 @@ class BannerView(ModelView, model=BannerModel):
     name = "Banner"
     name_plural = "Banners"
     column_list = [BannerModel.id,BannerModel.title, BannerModel.description,BannerModel.postImage]
-    icon = "fa-solid fa-thumbs-up"
+    icon = "fa-solid fa-television"
     page_size = 50
     page_size_options = [25, 50, 100, 200]
+
+class LibraryView(ModelView, model=Library):
+    column_list = [Library.id, Library.name, Library.category, Library.author,Library.publishdate,Library.postImage]
+    icon = "fa-solid fa-id-card"
+    page_size = 50
+    page_size_options = [25, 50, 100, 200]
+    can_edit = False

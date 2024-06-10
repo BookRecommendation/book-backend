@@ -72,6 +72,17 @@ class Library(Base):
     postImage = Column(FileType(storage=storage))
     description = Column(String, nullable=False)
 
+class Borrow(Base):
+    __tablename__ = "borrow"
+    id = Column(Integer, primary_key=True, index=True)
+    bookname = Column(String,  nullable=False)
+    bookId =  Column(Integer,nullable=False,index=True)
+    username = Column(String,  nullable=False)
+    userId =  Column(Integer,nullable=False,index=True)
+    createdate = Column(DateTime, default=datetime.datetime.now)
+    description = Column(String, nullable=False)
+    confirm = Column(Boolean, unique=False, default=False)
+
 
 class Rating(Base):
     __tablename__ = "rating"

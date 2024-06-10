@@ -65,3 +65,10 @@ class BookReviewSchema(BaseModel):
     class Config:
         orm_mode = True
     
+
+class BorrowSchema(BaseModel):
+    book_id: int
+
+
+    class Config:
+        orm_mode = True

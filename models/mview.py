@@ -1,5 +1,5 @@
 from sqladmin import Admin, ModelView
-from models.model import Admin,Student,Book,Rating,BannerModel,Library
+from models.model import Admin,Student,Book,Rating,BannerModel,Library,Borrow
 
 class AdminView(ModelView, model=Admin):
     column_list = [Admin.id, Admin.username, Admin.role,Admin.active,Admin.createdate,Admin.postImage]
@@ -42,3 +42,10 @@ class LibraryView(ModelView, model=Library):
     page_size = 50
     page_size_options = [25, 50, 100, 200]
     can_edit = False
+
+class BorrowView(ModelView, model=Borrow):
+    column_list = [Borrow.id, Borrow.username, Borrow.bookname,Borrow.createdate,Borrow.confirm]
+    icon = "fa-solid fa-address-book"
+    page_size = 50
+    page_size_options = [25, 50, 100, 200]
+    can_edit = True

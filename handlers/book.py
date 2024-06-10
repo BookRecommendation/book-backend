@@ -2,7 +2,7 @@ import logging
 from fastapi import APIRouter, Request, Depends, HTTPException
 from fastapi.logger import logger
 from models.schema import (
-    CurrentUser,BookReviewSchema
+    CurrentUser,BookReviewSchema,BorrowSchema
 
 )
 from typing import List, Dict
@@ -14,7 +14,7 @@ from modules.token import AuthToken
 from sqlalchemy import desc
 
 from models.model import  Student as User
-from models.model import Book,Rating,BannerModel,Library
+from models.model import Book,Rating,BannerModel,Library,Borrow
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from modules.utils import pagination
@@ -48,6 +48,27 @@ def get_lib_byid(id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Book ID not found.")
     return {"library":book_data}
 
+
+@router.post("/borrow", tags=["books"])
+async def borrow_book(
+    request: Request, data: BorrowSchema, db: Session = Depends(get_db), current_user: CurrentUser = Depends(get_current_user)
+):
+    logger.info(data.dict())
+    book_data = db.get(Library, data.book_id)
+    print(book_data)
+    print(current_user)
+    book_id = data.book_id
+    user_id = current_user["id"]
+    is_borrowed = db.query(Borrow).filter(Borrow.userId==user_id,Borrow.bookId==book_id).first()
+    if is_borrowed:
+        return {"status":"Already made request"}
+    else:
+        borrow_db = Borrow(username=current_user["username"],userId=current_user["id"],bookId=book_id,bookname=book_data.name,description="borrow")
+        db.add(borrow_db)
+        db.commit()
+        db.refresh(borrow_db)
+        return {"status":"Sent Borrow Request"}
+    return {}
 
 @router.get("/books", tags=["books"])
 async def get_book_categories(

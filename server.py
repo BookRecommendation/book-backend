@@ -32,7 +32,7 @@ def create_app():
     from modules.dependency import AdminAuthHandler, AuthHandler,RefreshToken
     from handlers import login, upload,book
     import handlers.database as app_model
-    from models.mview import AdminView,StudentView,BookView,RatingView,BannerView,LibraryView
+    from models.mview import AdminView,StudentView,BookView,RatingView,BannerView,LibraryView,BorrowView
     from models.model import Admin as User
     admin.add_view(AdminView)
     admin.add_view(StudentView)
@@ -40,6 +40,7 @@ def create_app():
     admin.add_view(RatingView)
     admin.add_view(BannerView)
     admin.add_view(LibraryView)
+    admin.add_view(BorrowView)
     app_model.Base.metadata.create_all(bind=engine)
     logging.basicConfig(
        format='Book:{levelname:7} {message}', style='{', level=logging.DEBUG)

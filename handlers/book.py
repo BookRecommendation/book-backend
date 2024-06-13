@@ -22,6 +22,15 @@ router = APIRouter()
 auth_handler = AuthToken()
 
 
+
+@router.get("/profiles/{id}", tags=["library"])
+def get_profile(id: str, db: Session = Depends(get_db), current_user: CurrentUser = Depends(get_current_user)):
+    profile_data = db.get(User, current_user["id"])
+    if not profile_data:
+        raise HTTPException(status_code=404, detail="User ID not found.")
+    return {"profile":profile_data}
+
+
 @router.get("/banners", tags=["banner"])
 async def get_app_banners(
     page: int = 1 , per_page: int=10,
